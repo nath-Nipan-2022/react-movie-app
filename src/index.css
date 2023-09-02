@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: 254, 99, 99;
+  --secondary-color: 123, 105, 181;
+  --accent-color: 229, 45, 41;
+  --accent-dark-color: 216, 35, 50;
+  --skeleton-color: 80, 75, 80;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+body {
+  background-color: #130808;
+  color: #ffe9e9;
+  font-family: "Poppins", sans-serif;
+}
+
+@layer base {
+  .movies_container {
+    @apply grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] mt-10 auto-rows-[12rem] md:auto-rows-[14rem] gap-6;
+  }
+
+  .movie-card {
+    @apply relative overflow-hidden rounded-xl bg-gray-400 transition;
+  }
+
+  .movie-image {
+    @apply w-full h-full object-cover rounded-lg transition-transform duration-[.4s];
+  }
+
+  .movie-desc {
+    @apply absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-t from-black/75 to-black/0 text-white;
+  }
+
+  .primary-btn {
+    @apply px-3 py-1.5 rounded-full bg-accent-color/70 text-white text-xs hover:bg-accent-dark-color transition duration-300;
+  }
+
+  .plus-btn {
+    @apply bg-white/10 backdrop-blur w-7 h-7 rounded-full cursor-pointer transition-colors hover:bg-white/20;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-br from-violet-400 to-yellow-500 text-transparent bg-clip-text;
+  }
+
+  .search-input {
+    @apply text-sm w-full hover:ring focus:ring outline-none;
+  }
+}
