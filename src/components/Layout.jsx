@@ -4,7 +4,7 @@ import Footer from "./footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="dark:bg-dark-color dark:text-light-color font-poppins">
       <Header />
       <Outlet />
       <Footer />
