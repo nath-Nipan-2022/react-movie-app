@@ -1,16 +1,22 @@
-import React from "react";
 import placeholder from "../assets/images/placeholder-image.png";
 import { starIcon, plusIcon } from "../assets/icons";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MovieCard = ({ movie, className = "", imageClassName = "" }) => {
-  const { image, name, premiered, rating } = movie;
+  const { title, backdrop_path, release_date, vote_average } = movie;
+
+  const ImagesUrls = useSelector((state) => state.ImagesUrls);
+
+  const imageUrl =
+    ImagesUrls.urls?.images.secure_base_url + "w300" + backdrop_path;
+  // "https://www.themoviedb.org/t/p/w220_and_h330_face/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg";
 
   return (
     <Link to={`/movie/${movie.id}`} className={`movie-card group ${className}`}>
       <figure className="w-full h-full">
         <img
-          src={image ? image.medium : placeholder}
+          src={backdrop_path ? imageUrl : placeholder}
           alt="movie poster"
           className={`movie-image scale-110 group-hover:scale-100 ${imageClassName}`}
         />
@@ -25,15 +31,12 @@ const MovieCard = ({ movie, className = "", imageClassName = "" }) => {
             height={12}
             className="mb-0.5"
           />
-          <span>{rating?.average != null ? rating.average : ""}</span>
+          <span>{vote_average != null ? vote_average : ""}</span>
         </div>
         <div>
-          <h3>
-            <span>{name}</span>
-          </h3>
-          <p>
-            <span>{premiered ? premiered.slice(0, 4) : ""}</span>
-          </p>
+          <h3>{title}</h3>
+          <p>{release_date ? release_date.slice(0, 4) : ""}</p>
+
           <div className="mt-2 flex items-center justify-between">
             <button className="primary-btn">Watch Now</button>
             <button className="plus-btn grid place-items-center">
