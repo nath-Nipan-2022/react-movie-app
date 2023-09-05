@@ -1,50 +1,57 @@
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import searchIcon from "../assets/icons/search.svg";
+import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ handleSearch }) => {
-  // const [term, setTerm] = useState("");
+const SearchBar = ({ onSearch, isOpen, setOpen, className }) => {
+  const [searchText, setSearchText] = useState("");
+  const inputRef = useRef();
+  const navigate = useNavigate();
+
+  const handleSearchTextChange = (e) => {
+    setSearchText(e.target.value);
+    onSearch(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // handleSearch(e.target.elements);
+    navigate(`/search/${searchText}`);
   };
 
-  const handleSearchChange = (e) => {
-    // debounce
-    let timer;
-    clearTimeout(timer);
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!inputRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick, true);
 
-    timer = setTimeout(() => {
-      // setTerm(e.target.value);
-      handleSearch(e.target.value);
-    }, 500);
-  };
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, [setOpen]);
 
   return (
-    <article className="search-bar-width mx-auto">
-      <form
-        onSubmit={handleSubmit}
-        className="relative rounded-3xl w-full max-w-sm mx-auto"
-      >
-        <img
-          src={searchIcon}
-          alt="search icon"
-          width={16}
-          className="absolute z-10 left-4 top-3"
-        />
-
-        <input
-          onChange={handleSearchChange}
-          type="search"
-          // value={term}
-          placeholder="Search movies..."
-          name="movie-search"
-          id="movie-search"
-          className="search-input py-[0.525rem] pl-10 pr-4 bg-gray-900 border border-gray-700 text-white rounded-full"
-        />
-      </form>
-    </article>
+    <form
+      onSubmit={handleSubmit}
+      className={`max-w-md mx-auto relative rounded-3xl ${
+        !isOpen ? "hidden" : ""
+      }`}
+    >
+      <img
+        src={searchIcon}
+        alt="search icon"
+        width={16}
+        className="absolute left-4 top-3"
+      />
+      <input
+        ref={inputRef}
+        value={searchText}
+        onChange={handleSearchTextChange}
+        type="search"
+        placeholder="Search movies..."
+        name="movie-search"
+        id="movie-search"
+        className={`search-input py-[0.525rem] ${className || ""}`}
+      />
+    </form>
   );
 };
 
