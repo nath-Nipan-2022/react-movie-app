@@ -2,25 +2,23 @@ import placeholder from "../assets/images/placeholder-image.png";
 import { starIcon, plusIcon } from "../assets/icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Image from "./lazyLoadImg/Image";
 
 const MovieCard = ({ movie, className = "", imageClassName = "" }) => {
-  const { title, backdrop_path, release_date, vote_average } = movie;
+  const { title, poster_path, release_date, vote_average } = movie;
 
-  const ImagesUrls = useSelector((state) => state.ImagesUrls);
+  const { urls } = useSelector((state) => state.ImagesUrls);
 
-  const imageUrl =
-    ImagesUrls.urls?.images.secure_base_url + "w300" + backdrop_path;
-  // "https://www.themoviedb.org/t/p/w220_and_h330_face/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg";
+  const imageUrl = urls?.images?.secure_base_url + "original" + poster_path;
 
   return (
     <Link to={`/movie/${movie.id}`} className={`movie-card group ${className}`}>
-      <figure className="w-full h-full">
-        <img
-          src={backdrop_path ? imageUrl : placeholder}
-          alt="movie poster"
-          className={`movie-image scale-110 group-hover:scale-100 ${imageClassName}`}
-        />
-      </figure>
+      <Image
+        src={poster_path ? imageUrl : placeholder}
+        alt="movie poster"
+        style={{ transition: ".3s" }}
+        className={`movie-image scale-110 group-hover:scale-100 ${imageClassName}`}
+      />
 
       <article className="movie-desc text-sm">
         <div className="text-xs flex items-center gap-1 rounded bg-black w-fit p-0.5 px-1">
