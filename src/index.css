@@ -10,26 +10,27 @@
   --accent-color: 229, 45, 41;
   --accent-dark-color: 216, 35, 50;
   --skeleton-color: 80, 75, 80;
+  --dark-color: 19, 8, 8;
+  --light-color: 255, 233, 233;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  scroll-padding-top: 4rem;
 }
 
-body {
-  background-color: #130808;
-  color: #ffe9e9;
-  font-family: "Poppins", sans-serif;
+.lazy-load-image-background {
+  width: 100%;
+  height: 100%;
 }
 
 @layer base {
   .movies_container {
-    @apply grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] mt-10 auto-rows-[12rem] md:auto-rows-[14rem] gap-6;
+    @apply grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] auto-rows-[12rem] md:auto-rows-[14rem] gap-6;
   }
 
   .movie-card {
-    @apply relative overflow-hidden rounded-xl bg-gray-400 transition;
+    @apply relative overflow-hidden rounded-xl bg-gray-400/50 transition;
   }
 
   .movie-image {
@@ -37,11 +38,11 @@ body {
   }
 
   .movie-desc {
-    @apply absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-t from-black/75 to-black/0 text-white;
+    @apply absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-t from-black/75 to-black/10 text-white;
   }
 
   .primary-btn {
-    @apply px-3 py-1.5 rounded-full bg-accent-color/70 text-white text-xs hover:bg-accent-dark-color transition duration-300;
+    @apply px-3 py-1.5 leading-tight rounded-full bg-accent-color/70 text-white text-xs hover:bg-accent-dark-color transition duration-300;
   }
 
   .plus-btn {
@@ -49,10 +50,10 @@ body {
   }
 
   .text-gradient {
-    @apply bg-gradient-to-br from-violet-400 to-yellow-500 text-transparent bg-clip-text;
+    @apply bg-gradient-to-br from-fuchsia-300 to-orange-300 text-transparent bg-clip-text;
   }
 
   .search-input {
-    @apply text-sm w-full hover:ring focus:ring outline-none;
+    @apply text-sm w-full pl-10 pr-4 bg-gray-900 border border-gray-700 text-white outline-none rounded-full hover:ring focus:ring;
   }
 }
