@@ -4,11 +4,11 @@ import HeroSection from "./HeroSection";
 
 const Home = () => {
   return (
-    <Container className="min-h-screen">
-      <main>
-        <HeroSection />
+    <main>
+      <HeroSection />
 
-        <section className="mt-6">
+      <Container>
+        <section className="mt-6 relative z-0">
           <h2 className="mb-2 font-medium py-2">Popular Movies</h2>
           <MoviesList moviesType={"popular"} />
         </section>
@@ -22,8 +22,8 @@ const Home = () => {
           <h2 className="py-2 mb-2 font-medium">Featured</h2>
           {/* {isSuccess && <MoviesList moviesType={} />} */}
         </section>
-      </main>
-    </Container>
+      </Container>
+    </main>
   );
 };
 export default Home;
