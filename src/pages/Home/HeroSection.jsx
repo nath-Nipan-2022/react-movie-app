@@ -7,7 +7,7 @@ import Image from "../../components/lazyLoadImg/Image";
 
 const HeroSection = () => {
   const [backdropUrl, setBackdropUrl] = useState("");
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
   const { urls } = useSelector((state) => state.ImagesUrls);
@@ -24,11 +24,11 @@ const HeroSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    search.length > 0 && navigate("/search/" + search);
+    searchQuery.length > 0 && navigate("/search/" + searchQuery);
   };
 
   return (
-    <section className="relative z-0 grid place-items-center h-[450px] md:h-[800px">
+    <section className="relative z-0 grid place-items-center h-[450px] md:h-[600px]">
       <figure className="absolute inset-0 -z-10">
         <Image
           src={backdropUrl}
@@ -39,7 +39,7 @@ const HeroSection = () => {
       {/* subtle gradient */}
       <div className="absolute h-60 w-full bottom-0 -z-10 bg-gradient-to-t from-dark-color to-transparent"></div>
 
-      <div className="text-center">
+      <div className="text-center px-8">
         <h1 className="text-4xl font-bold w-fit mx-auto mb-4 text-gradient">
           Welcome.
         </h1>
@@ -58,11 +58,11 @@ const HeroSection = () => {
           />
           <input
             type="search"
-            value={search}
+            value={searchQuery}
             placeholder="Search movies or TV shows..."
             name="movie-search"
             id="movie-search"
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input py-[0.525rem]"
           />
         </form>

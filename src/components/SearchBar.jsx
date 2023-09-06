@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import searchIcon from "../assets/icons/search.svg";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ onSearch, isOpen, setOpen, className }) => {
+const SearchBar = ({ onSearch, isOpen, setOpen, autoFocus, className }) => {
   const [searchText, setSearchText] = useState("");
   const inputRef = useRef();
   const navigate = useNavigate();
@@ -46,6 +46,7 @@ const SearchBar = ({ onSearch, isOpen, setOpen, className }) => {
         value={searchText}
         onChange={handleSearchTextChange}
         type="search"
+        autoFocus={autoFocus}
         placeholder="Search movies..."
         name="movie-search"
         id="movie-search"
