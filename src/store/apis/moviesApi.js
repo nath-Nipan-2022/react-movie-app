@@ -19,8 +19,8 @@ const moviesApi = createApi({
     getMovies: builder.query({
       query: (query) => `${query}`,
     }),
-    getMovieById: builder.query({
-      query: (id) => `/movie/${id}`,
+    getMediaById: builder.query({
+      query: ({ media_type, id }) => `/${media_type}/${id}`,
     }),
     getConfiguration: builder.query({
       query: () => `/configuration`,
@@ -30,7 +30,7 @@ const moviesApi = createApi({
 
 export const {
   useGetMoviesQuery,
-  useGetMovieByIdQuery,
+  useGetMediaByIdQuery,
   useGetConfigurationQuery,
 } = moviesApi;
 export { moviesApi };
