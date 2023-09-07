@@ -28,11 +28,11 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative z-0 grid place-items-center h-[450px] md:h-[600px]">
+    <section className="relative z-0 grid place-items-center h-[450px]">
       <figure className="absolute inset-0 -z-10">
         <Image
           src={backdropUrl}
-          className={"movie-image rounded-none"}
+          className={"movie-image rounded-none lg:object-top"}
           style={{ opacity: 0.35 }}
         />
       </figure>
