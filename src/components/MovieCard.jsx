@@ -4,15 +4,30 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Image from "./lazyLoadImg/Image";
 
-const MovieCard = ({ movie, className = "", imageClassName = "" }) => {
-  const { title, poster_path, release_date, vote_average } = movie;
+const MovieCard = ({
+  movie,
+  endpoint,
+  className = "",
+  imageClassName = "",
+}) => {
+  const {
+    title,
+    name,
+    poster_path,
+    release_date,
+    first_air_date,
+    vote_average,
+  } = movie;
 
   const { urls } = useSelector((state) => state.ImagesUrls);
 
   const imageUrl = urls?.images?.secure_base_url + "original" + poster_path;
 
   return (
-    <Link to={`/movie/${movie.id}`} className={`movie-card group ${className}`}>
+    <Link
+      to={`/${movie.media_type || endpoint}/${movie.id}`}
+      className={`movie-card group ${className}`}
+    >
       <Image
         src={poster_path ? imageUrl : placeholder}
         alt="movie poster"
@@ -29,11 +44,15 @@ const MovieCard = ({ movie, className = "", imageClassName = "" }) => {
             height={12}
             className="mb-0.5"
           />
-          <span>{vote_average != null ? vote_average : ""}</span>
+          <span>{vote_average != null ? vote_average.toFixed(1) : ""}</span>
         </div>
         <div>
-          <h3>{title}</h3>
-          <p>{release_date ? release_date.slice(0, 4) : ""}</p>
+          <h3>{title || name}</h3>
+          <p>
+            {release_date
+              ? release_date.slice(0, 4)
+              : first_air_date.slice(0, 4)}
+          </p>
 
           <div className="mt-2 flex items-center justify-between">
             <button className="primary-btn">Watch Now</button>
