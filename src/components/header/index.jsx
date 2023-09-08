@@ -58,7 +58,7 @@ const Header = () => {
         showHeader ? "translate-y-0" : "-translate-y-full"
       } ${lastScrollY > 100 ? "backdrop-blur bg-dark-color/30" : ""}`}
     >
-      <Container className="relative z-20 flex justify-between items-center py-0 h-16">
+      <Container className="relative z-20 flex justify-between items-center py-0 h-14 md:h-16">
         <Link to={"/"} className="shrink-0 flex gap-2 items-center">
           <img src={logo} alt="logo" width={30} height={30} title="logo" />
           <span className="text-2xl text-gradient">MovieLand</span>
