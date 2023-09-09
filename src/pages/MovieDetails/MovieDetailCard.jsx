@@ -1,14 +1,19 @@
 import placeholder from "../../assets/images/placeholder-image.png";
-import { plusIcon, starIcon } from "../../assets/icons";
+import { playIcon, plusIcon, starIcon } from "../../assets/icons";
 import { useSelector } from "react-redux";
 import Image from "../../components/lazyLoadImg/Image";
 import Container from "../../components/Container";
+import PopupVideo from "../../components/PopupVideo";
+import { useState } from "react";
 
 const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoId, setVideoId] = useState(null);
+
   const { backdrop_path, poster_path } = movie;
 
-  const ImagesUrls = useSelector((state) => state.ImagesUrls);
-  const imageUrl = ImagesUrls.urls.images.secure_base_url;
+  const { urls } = useSelector((state) => state.ImagesUrls);
+  const imageUrl = urls.images.secure_base_url;
 
   const formateDate = (date) => {
     if (!date) return "N/A";
@@ -27,6 +32,15 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
     (c) => c.job === "Screenplay" || c.job === "Story" || c.job === "Writer"
   );
 
+  const openVideo = () => {
+    setShowVideo(true);
+    setVideoId(video.key);
+  };
+  const closeVideo = () => {
+    setShowVideo(false);
+    setVideoId(null);
+  };
+
   return (
     <section className="relative z-0 bg-dark-color">
       <figure className="absolute inset-0 -z-10">
@@ -36,9 +50,9 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
           style={{ opacity: 0.35 }}
         />
       </figure>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-dark-color h-full to-dark-color/0"></div>
+      <div className="absolute inset-0 h-full -z-10 bg-gradient-to-t from-dark-color to-dark-color/0"></div>
 
-      <Container className={"sm:flex sm:gap-8 p-8 pt-20"}>
+      <Container className={"sm:flex sm:gap-8 px-8 pt-20 pb-0"}>
         {/* poster */}
         <div className="sm:w-1/2 md:w-2/5 lg:w-80 xl:w-1/2 shrink-0 h-[500px] lg:h-[380px]">
           <Image
@@ -50,7 +64,7 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
 
         {/* details */}
         <article className="mt-8 sm:mt-0">
-          <div className="-mt-1 mb-1">
+          <div className="mb-1 -mt-1">
             <span className="text-xl font-semibold">
               {movie?.title || movie?.name}{" "}
             </span>
@@ -74,9 +88,15 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
             <span>{movie?.vote_average.toFixed(1)}</span>
           </div>
 
-          <div className="mt-2 flex items-center gap-4">
-            <button className="primary-btn py-2 px-4">Watch Trailer</button>
-            <button className="plus-btn grid place-items-center w-8 h-8">
+          <div className="flex items-center gap-4 mt-2">
+            <button
+              onClick={openVideo}
+              className="flex items-center px-2.5 py-1.5 primary-btn gap-1"
+            >
+              <img src={playIcon} width={20} height={20} alt="play icon" />
+              <span>Watch Trailer</span>
+            </button>
+            <button className="grid w-8 h-8 plus-btn place-items-center">
               <img
                 src={plusIcon}
                 alt="plus icon"
@@ -89,22 +109,22 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
 
           <div className="mt-5">
             <span className="text-gray-200">Overview</span>
-            <p className="mt-1 text-xs leading-relaxed text-gray-400/80">
+            <p className="mt-1 text-xs leading-relaxed text-gray-400">
               {movie.overview}
             </p>
           </div>
 
           {movie?.status && (
-            <div className="mt-5 mr-5 inline-flex flex-col gap-1">
-              <span className="text-gray-200 text-sm ">Status: </span>
-              <span className=" text-xs text-gray-400/80">{movie.status}</span>
+            <div className="inline-flex flex-col gap-1 mt-5 mr-5">
+              <span className="text-sm text-gray-200 ">Status: </span>
+              <span className="text-xs text-gray-400/80">{movie.status}</span>
             </div>
           )}
 
           {(movie?.release_date || movie?.first_air_date) && (
-            <div className="mr-5 inline-flex flex-col gap-1">
-              <span className="text-gray-200 text-sm">Release Date: </span>
-              <span className=" text-xs text-gray-400/80">
+            <div className="inline-flex flex-col gap-1 mr-5">
+              <span className="text-sm text-gray-200">Release Date: </span>
+              <span className="text-xs text-gray-400/80">
                 {movie?.release_date
                   ? formateDate(movie.release_date)
                   : formateDate(movie.first_air_date)}
@@ -114,18 +134,18 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
 
           {movie?.runtime && (
             <div className="inline-flex flex-col gap-1">
-              <span className="text-gray-200 text-sm">Runtime: </span>
-              <span className=" text-xs text-gray-400/80">
+              <span className="text-sm text-gray-200">Runtime: </span>
+              <span className="text-xs text-gray-400/80">
                 {formateRuntime(movie.runtime)}
               </span>
             </div>
           )}
 
           {directors?.length > 0 && (
-            <div className="mt-2 pt-1 border-t border-gray-700/50">
-              <span className="text-gray-200 text-sm">Director: </span>
+            <div className="pt-1 mt-2 border-t border-gray-700/50">
+              <span className="text-sm text-gray-200">Director: </span>
               {directors.map((d, i) => (
-                <span key={i} className=" text-xs text-gray-400/80">
+                <span key={i} className="text-xs text-gray-400/80">
                   {d.name}
                   {directors.length - 1 !== i && ", "}
                 </span>
@@ -134,10 +154,10 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
           )}
 
           {writers?.length > 0 && (
-            <div className="mt-2 pt-1 border-t border-gray-700/50">
-              <span className="text-gray-200 text-sm">Writers: </span>
+            <div className="pt-1 mt-2 border-t border-gray-700/50">
+              <span className="text-sm text-gray-200">Writers: </span>
               {writers.map((d, i) => (
-                <span key={i} className=" text-xs text-gray-400/80">
+                <span key={i} className="text-xs text-gray-400/80">
                   {d.name}
                   {writers.length - 1 !== i && ", "}
                 </span>
@@ -146,15 +166,23 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
           )}
 
           {movie?.created_by?.length > 0 && (
-            <div className="mt-2 pt-1 border-t border-gray-700/50">
-              <span className="text-gray-200 text-sm">Creator: </span>
+            <div className="py-1 mt-2 border-t border-gray-700/50">
+              <span className="text-sm text-gray-200">Creator: </span>
               {movie?.created_by?.map((d, i) => (
-                <span key={i} className=" text-xs text-gray-400/80">
+                <span key={i} className="text-xs text-gray-400/80">
                   {d.name}
                   {movie?.created_by?.length - 1 !== i && ", "}
                 </span>
               ))}
             </div>
+          )}
+
+          {showVideo && (
+            <PopupVideo
+              videoId={videoId}
+              open={showVideo}
+              onClose={closeVideo}
+            />
           )}
         </article>
       </Container>
