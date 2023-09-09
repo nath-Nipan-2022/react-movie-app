@@ -28,11 +28,11 @@ const App = () => {
           element: <Home />,
         },
         {
-          path: "movie/:id",
+          path: "/:media_type/:id",
           element: <MovieDetails />,
         },
         {
-          path: "search/:id",
+          path: "search/:query",
           element: <SearchResults />,
         },
       ],
