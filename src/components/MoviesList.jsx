@@ -1,13 +1,10 @@
 import MovieCard from "./MovieCard";
 import Skeletons from "./Skeletons";
-import { useGetMoviesQuery } from "../store/apis/moviesApi";
 import { useRef } from "react";
 import rightArrow from "../assets/icons/right-arrow.svg";
 import leftArrow from "../assets/icons/left-arrow.svg";
 
-const List = ({ url, endpoint }) => {
-  const { data: movies, isFetching, error } = useGetMoviesQuery(`${url}`);
-
+const List = ({ data: movies, isLoading, endpoint }) => {
   const carouselRef = useRef();
 
   const navigation = (direction) => {
@@ -35,14 +32,36 @@ const List = ({ url, endpoint }) => {
     );
   });
 
+  const renderSkeletons = Array(10)
+    .fill(0)
+    .map((_, i) => (
+      <div
+        key={i}
+        className="shrink-0 basis-44 rounded-xl aspect-[1/1.5] relative bg-[#d49aff69]"
+      >
+        <article className="absolute inset-0 flex flex-col justify-between p-4 rounded-lg">
+          <Skeletons className="w-10 h-3" />
+          <div>
+            <Skeletons className="w-full h-2 mb-2" />
+            <Skeletons className="w-3/4 h-2 mb-3" />
+            <div className="flex justify-between gap-3 mt-4">
+              <Skeletons className="w-20 rounded-xl h-7" />
+              <Skeletons className="rounded-full h-7 w-7" />
+            </div>
+          </div>
+        </article>
+      </div>
+    ));
+
+  if (movies?.results?.length <= 0) {
+    return "";
+  }
+
   return (
-    <div className="overflow-hidden relative">
-      {isFetching ? (
+    <div className="relative overflow-hidden">
+      {isLoading ? (
         <div className="flex gap-2.5 overflow-y-hidden sm:overflow-hidden min-h-[260px]">
-          <Skeletons
-            times={10}
-            className="shrink-0 basis-44 rounded-xl aspect-[1/1.5]"
-          />
+          {renderSkeletons}
         </div>
       ) : (
         // Carousel
@@ -54,16 +73,22 @@ const List = ({ url, endpoint }) => {
         </div>
       )}
       {/* arrows */}
-      <div onClick={() => navigation("left")} className="carousel-arrow left-4">
-        <img src={leftArrow} width={20} height={20} alt="left arrow" />
-      </div>
-      <div
-        onClick={() => navigation("right")}
-        className="carousel-arrow right-4"
-      >
-        <img src={rightArrow} width={20} height={20} alt="right arrow" />
-      </div>
-      {error && "Error loading movies"}
+      {movies?.results?.length >= 5 && (
+        <div
+          onClick={() => navigation("left")}
+          className="carousel-arrow invert left-4"
+        >
+          <img src={leftArrow} width={20} height={20} alt="left arrow" />
+        </div>
+      )}
+      {movies?.results?.length >= 5 && (
+        <div
+          onClick={() => navigation("right")}
+          className="carousel-arrow invert right-4"
+        >
+          <img src={rightArrow} width={20} height={20} alt="right arrow" />
+        </div>
+      )}
     </div>
   );
 };
