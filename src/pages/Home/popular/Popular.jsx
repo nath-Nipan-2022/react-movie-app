@@ -1,6 +1,7 @@
 import { useState } from "react";
 import List from "../../../components/MoviesList";
 import SwitchTabs from "../../../components/SwitchTabs";
+import { useGetMoviesQuery } from "../../../store/apis/moviesApi";
 
 const media_types = ["Movies", "TV Shows"];
 
@@ -14,13 +15,17 @@ const Popular = () => {
     updatedEndpoint = "movie";
   }
 
+  const { data, isFetching, error } = useGetMoviesQuery(
+    `/${updatedEndpoint}/popular`
+  );
+
   return (
-    <section className="pb-12 relative z-0">
-      <article className="flex justify-between items-center mb-4">
-        <h2 className="mb-2 font-medium py-2">Popular</h2>
+    <section className="relative z-0 pb-12">
+      <article className="flex items-center justify-between mb-4">
+        <h2 className="py-2 mb-2 font-medium">Popular</h2>
         <SwitchTabs tabs={media_types} onSwitch={setEndpoint} />
       </article>
-      <List url={`/${updatedEndpoint}/popular`} endpoint={updatedEndpoint} />
+      <List data={data} isLoading={isFetching} endpoint={updatedEndpoint} />
     </section>
   );
 };
