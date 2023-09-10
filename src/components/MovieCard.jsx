@@ -21,7 +21,7 @@ const MovieCard = ({
 
   const { urls } = useSelector((state) => state.ImagesUrls);
 
-  const imageUrl = urls?.images?.secure_base_url + "original" + poster_path;
+  const imageUrl = urls?.images?.secure_base_url + "w342" + poster_path;
 
   return (
     <Link
@@ -50,8 +50,8 @@ const MovieCard = ({
           <h3>{title || name}</h3>
           <p>
             {release_date
-              ? release_date.slice(0, 4)
-              : first_air_date.slice(0, 4)}
+              ? release_date?.slice(0, 4)
+              : first_air_date?.slice(0, 4)}
           </p>
 
           <div className="mt-2 flex items-center justify-between">

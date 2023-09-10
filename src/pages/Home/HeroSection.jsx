@@ -11,16 +11,13 @@ const HeroSection = () => {
 
   const navigate = useNavigate();
   const { urls } = useSelector((state) => state.ImagesUrls);
-
+  const imageUrl = urls?.images?.secure_base_url;
   const { data: movies, error } = useGetMoviesQuery("/movie/popular");
 
   useEffect(() => {
     const randomMovie = movies?.results[Math.floor(Math.random() * 20)];
-    const imageUrl =
-      urls?.images?.secure_base_url + "original" + randomMovie?.backdrop_path;
-
-    setBackdropUrl(imageUrl);
-  }, [movies, urls]);
+    setBackdropUrl(randomMovie?.backdrop_path);
+  }, [movies]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +28,7 @@ const HeroSection = () => {
     <section className="relative z-0 grid place-items-center h-[450px]">
       <figure className="absolute inset-0 -z-10">
         <Image
-          src={backdropUrl}
+          src={imageUrl + "w1280" + backdropUrl}
           className={"movie-image rounded-none lg:object-top"}
           style={{ opacity: 0.35 }}
         />
