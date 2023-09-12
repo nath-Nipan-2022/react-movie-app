@@ -3,13 +3,12 @@ import { starIcon, plusIcon } from "../assets/icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Image from "./lazyLoadImg/Image";
+import { forwardRef } from "react";
 
-const MovieCard = ({
-  movie,
-  endpoint,
-  className = "",
-  imageClassName = "",
-}) => {
+const MovieCard = forwardRef(function MovieCard(
+  { movie, endpoint, className, imageClassName },
+  ref
+) {
   const {
     title,
     name,
@@ -23,11 +22,8 @@ const MovieCard = ({
 
   const imageUrl = urls?.images?.secure_base_url + "w342" + poster_path;
 
-  return (
-    <Link
-      to={`/${movie.media_type || endpoint}/${movie.id}`}
-      className={`movie-card group ${className}`}
-    >
+  const cardBody = (
+    <>
       <Image
         src={poster_path ? imageUrl : placeholder}
         alt="movie poster"
@@ -35,7 +31,7 @@ const MovieCard = ({
         className={`movie-image scale-110 group-hover:scale-100 ${imageClassName}`}
       />
 
-      <article className="movie-desc text-sm">
+      <article className="text-sm movie-desc">
         <div className="text-xs flex items-center gap-1 rounded bg-black w-fit p-0.5 px-1">
           <img
             src={starIcon}
@@ -54,9 +50,9 @@ const MovieCard = ({
               : first_air_date?.slice(0, 4)}
           </p>
 
-          <div className="mt-2 flex items-center justify-between">
+          <div className="flex items-center justify-between mt-2">
             <button className="primary-btn">Watch Now</button>
-            <button className="plus-btn grid place-items-center">
+            <button className="grid plus-btn place-items-center">
               <img
                 src={plusIcon}
                 alt="plus icon"
@@ -68,8 +64,29 @@ const MovieCard = ({
           </div>
         </div>
       </article>
-    </Link>
+    </>
   );
-};
+
+  if (ref) {
+    return (
+      <Link
+        to={`/${movie.media_type || endpoint}/${movie.id}`}
+        className={`movie-card group ${className}`}
+        ref={ref}
+      >
+        {cardBody}
+      </Link>
+    );
+  } else {
+    return (
+      <Link
+        to={`/${movie.media_type || endpoint}/${movie.id}`}
+        className={`movie-card group ${className}`}
+      >
+        {cardBody}
+      </Link>
+    );
+  }
+});
 
 export default MovieCard;
