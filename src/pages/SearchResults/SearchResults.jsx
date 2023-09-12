@@ -1,27 +1,57 @@
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import MovieCard from "../../components/MovieCard";
-import { useGetSearchResultsQuery } from "../../store/apis/moviesApi";
 import Skeletons from "../../components/Skeletons";
+import { useSearchResults } from "../../hook/useSearchResults";
 
 const SearchResults = () => {
   const [pageNum, setPageNum] = useState(1);
   const { query } = useParams();
+  const observer = useRef();
 
-  const { data, isFetching, error } = useGetSearchResultsQuery({
+  const { results, isLoading, error, hasMore } = useSearchResults(
     query,
-    pageNum,
-  });
+    pageNum
+  );
 
-  const renderResults = data?.results?.map((r) => (
-    <MovieCard
-      key={r.id}
-      movie={r}
-      endpoint={r.endpoint}
-      className="shrink-0 bg-skeleton aspect-[1/1.45]"
-    />
-  ));
+  const lastElementRefFunc = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNum((prev) => prev + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
+  const renderResults = results?.map((r, i) => {
+    if (results?.length === i + 1) {
+      return (
+        <MovieCard
+          key={r.id}
+          movie={r}
+          endpoint={r.endpoint}
+          ref={lastElementRefFunc} //👈 lastElemRef
+          className="shrink-0 bg-skeleton aspect-[1/1.45]"
+        />
+      );
+    }
+
+    return (
+      <MovieCard
+        key={r.id}
+        movie={r}
+        endpoint={r.endpoint}
+        className="shrink-0 bg-skeleton aspect-[1/1.45]"
+      />
+    );
+  });
 
   return (
     <main>
@@ -31,9 +61,10 @@ const SearchResults = () => {
             Search results for {`'${query}'`}
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 sm:gap-6 lg:gap-4 lg:grid-cols-4">
-            {!isFetching ? renderResults : renderSkeletons}
+            {renderResults}
+            {isLoading && renderSkeletons}
           </div>
-          {data?.results?.length <= 0 && <div>No results found</div>}
+          {results?.length <= 0 && <div>No results found</div>}
           {error && (
             <div className="font-bold text-center text-red-500">{error}</div>
           )}
