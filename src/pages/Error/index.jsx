@@ -8,23 +8,25 @@ export default function ErrorPage() {
   return (
     <div
       id="error-page"
-      className="grid place-items-center h-screen pb-10 bg-slate-800 text-red-400"
+      className="grid h-screen pb-10 bg-[#ffc7c3] text-amber-700 place-items-center"
     >
       <div className="max-w-[260px] p-4">
         <h1 className="mb-4">
-          <div className="font-medium">Oops!</div>
-          <div className="text-9xl tracking-wide">404</div>
+          <div className="font-semibold">Oops!</div>
+          <div className="font-semibold tracking-wide text-9xl">404</div>
           <div className="text-3xl">
             Something went <span className="font-bold">WRONG!</span>
           </div>
         </h1>
-        <Link
-          to={"/"}
-          className="rounded-full py-1.5 bg-slate-600 text-white pl-3 pr-4 hover:bg-slate-700 transition flex items-center gap-2.5 w-fit "
-        >
-          <span>{/* <GoArrowLeft /> */}</span>
-          <span>Back</span>
-        </Link>
+
+        <div className="mt-6">
+          <Link
+            to={"/"}
+            className="px-6 py-2 text-sm font-semibold transition duration-300 bg-white rounded-full shadow-lg text-amber-800 hover:text-white hover:bg-black"
+          >
+            <span>Back</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
