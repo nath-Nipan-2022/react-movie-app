@@ -52,9 +52,9 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
       </figure>
       <div className="absolute inset-0 h-full -z-10 bg-gradient-to-t from-dark-color to-dark-color/0"></div>
 
-      <Container className={"sm:flex sm:gap-8 px-8 pt-20 pb-0"}>
+      <Container className={"sm:flex sm:gap-8 px-6 pt-20 pb-0"}>
         {/* poster */}
-        <div className="sm:w-1/2 md:w-2/5 lg:w-80 xl:w-1/2 shrink-0 h-[500px] lg:h-[380px]">
+        <div className="sm:w-1/2 md:w-2/5 lg:w-80 shrink-0 h-[500px] lg:h-[450px]">
           <Image
             src={`${imageUrl}w780${poster_path}` || placeholder}
             alt="movie poster"
@@ -77,7 +77,18 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
           </div>
           <div className="text-sm text-gray-400">{movie.tagline}</div>
 
-          <div className="mt-1 flex items-center gap-1 w-fit p-0.5">
+          <div className="mt-2 text-xs text-gray-400/80">
+            {movie?.genres?.map((g) => (
+              <span
+                key={g.id}
+                className="rounded-md p-0.5 px-2 text-white bg-accent-color/50 mr-2"
+              >
+                {g.name}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-2 flex items-center gap-1 w-fit p-0.5">
             <img
               src={starIcon}
               alt="star icon"
