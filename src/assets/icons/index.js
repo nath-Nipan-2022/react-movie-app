@@ -1,3 +1,5 @@
+import playIcon from "./play-fill-white.svg";
+import chevron from "./chevron.svg";
 import plusIcon from "./plus.svg";
 import starIcon from "./star.svg";
 import searchIcon from "./search.svg";
@@ -6,6 +8,7 @@ import twitter from "./twitter.svg";
 import instagram from "./instagram.svg";
 import linkedin from "./linkedin.svg";
 export {
+  playIcon,
   plusIcon,
   starIcon,
   searchIcon,
@@ -13,4 +16,5 @@ export {
   instagram,
   linkedin,
   twitter,
+  chevron,
 };
