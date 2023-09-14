@@ -25,6 +25,17 @@ const moviesApi = createApi({
     getConfiguration: builder.query({
       query: () => `/configuration`,
     }),
+    getMediaDetails: builder.query({
+      // detailsQuery is for 'videos' or 'casts'
+      query: ({ media_type, id, detailsQuery }) => {
+        return `/${media_type}/${id}/${detailsQuery}`;
+      },
+    }),
+    getSearchResults: builder.query({
+      query: ({ query, pageNum }) => {
+        return `search/multi?query=${query}&page=${pageNum}`;
+      },
+    }),
   }),
 });
 
@@ -32,5 +43,7 @@ export const {
   useGetMoviesQuery,
   useGetMediaByIdQuery,
   useGetConfigurationQuery,
+  useGetMediaDetailsQuery,
+  useGetSearchResultsQuery,
 } = moviesApi;
 export { moviesApi };

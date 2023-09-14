@@ -1,23 +1,42 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import MovieCard from "../../components/MovieCard";
 import Skeletons from "../../components/Skeletons";
-import { useSearchResults } from "../../hook/useSearchResults";
+import { useGetSearchResultsQuery } from "../../store/apis/moviesApi";
 
 const SearchResults = () => {
   const [pageNum, setPageNum] = useState(1);
+  const [results, setResults] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const { query } = useParams();
   const observer = useRef();
 
-  const { results, isLoading, error, hasMore } = useSearchResults(
+  const { data, isFetching, error } = useGetSearchResultsQuery({
     query,
-    pageNum
-  );
+    pageNum,
+  });
+
+  useEffect(() => {
+    if (pageNum === data?.total_pages) {
+      setHasMore(false);
+    }
+    if (data?.results.length > 0) {
+      setResults((prev) => [...prev, ...data.results]);
+    } else {
+      setResults(data?.results);
+    }
+  }, [pageNum, data]);
+
+  // reset results
+  useEffect(() => {
+    setResults([]);
+    setPageNum(1);
+  }, [query]);
 
   const lastElementRefFunc = useCallback(
     (node) => {
-      if (isLoading) return;
+      if (isFetching) return;
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
@@ -27,10 +46,12 @@ const SearchResults = () => {
       });
       if (node) observer.current.observe(node);
     },
-    [isLoading, hasMore]
+    [isFetching, hasMore]
   );
 
-  const renderResults = results?.map((r, i) => {
+  const finalResults = results?.length > 0 ? results : data?.results;
+
+  const renderResults = finalResults?.map((r, i) => {
     if (results?.length === i + 1) {
       return (
         <MovieCard
@@ -62,8 +83,12 @@ const SearchResults = () => {
           </div>
           <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 sm:gap-6 lg:gap-4 lg:grid-cols-4">
             {renderResults}
-            {isLoading && renderSkeletons}
           </div>
+          {isFetching && (
+            <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 sm:gap-6 lg:gap-4 lg:grid-cols-4 min-h-[400px]">
+              {renderSkeletons}
+            </div>
+          )}
           {results?.length <= 0 && <div>No results found</div>}
           {error && (
             <div className="font-bold text-center text-red-500">{error}</div>
@@ -74,7 +99,7 @@ const SearchResults = () => {
   );
 };
 
-const renderSkeletons = Array(10)
+const renderSkeletons = Array(4)
   .fill(0)
   .map((_, i) => (
     <div key={i} className="rounded-xl aspect-[1/1.5] relative bg-[#d49aff69]">
