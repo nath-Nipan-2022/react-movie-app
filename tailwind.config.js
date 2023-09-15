@@ -8,19 +8,26 @@ module.exports = {
         "secondary-color": "rgba(var(--secondary-color))",
         "accent-color": "rgba(var(--accent-color))",
         "accent-dark-color": "rgba(var(--accent-dark-color))",
-        skeleton: "rgb(var(--skeleton-color))",
+        skeleton: "var(--skeleton-color)",
+        "dark-color": "rgba(var(--dark-color))",
+        "light-color": "rgba(var(--light-color))",
       },
-      // "shimmer": {
-      //   "50%": {
-      //     "background-color": "rgba(245, 220, 191, 0.15)",
-      //   },
-      // },
-      // animation: {
-      //   "shimmer": "shimmer 1.5s infinite",
-      // },
       width: {
         container: "min(100%, 980px)",
         "search-bar": " min(80%, 280px)",
+      },
+      fontFamily: {
+        poppins: "'Noto Sans',sans-serif",
+      },
+      keyframes: {
+        shimmer: {
+          to: {
+            transform: "translateX(100%)",
+          },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.25s infinite",
       },
     },
   },
