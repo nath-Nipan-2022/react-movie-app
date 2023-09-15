@@ -23,7 +23,7 @@ const Header = () => {
   }, [pathname]);
 
   const debouncedValue = useDebounce(searchQuery, 500);
-  debouncedValue && console.log(debouncedValue);
+  console.log("debouncedValue: ", debouncedValue, "searchQuery: ", searchQuery);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,14 +58,14 @@ const Header = () => {
         showHeader ? "translate-y-0" : "-translate-y-full"
       } ${lastScrollY > 100 ? "backdrop-blur bg-dark-color/30" : ""}`}
     >
-      <Container className="relative z-20 flex justify-between items-center py-0 h-14 md:h-16">
-        <Link to={"/"} className="shrink-0 flex gap-2 items-center">
+      <Container className="relative z-20 flex items-center justify-between py-0 h-14 md:h-16">
+        <Link to={"/"} className="flex items-center gap-2 shrink-0">
           <img src={logo} alt="logo" width={30} height={30} title="logo" />
-          <span className="text-2xl text-gradient">MovieLand</span>
+          <span className="text-2xl font-bold text-gradient">MovieLand</span>
         </Link>
 
         <nav>
-          <ul className="flex gap-4 items-center">
+          <ul className="flex items-center gap-4">
             <li
               className={`${
                 showSearchBar
@@ -95,13 +95,13 @@ const Header = () => {
                 className="cursor-pointer group-hover:brightness-125"
               />
             </li>
-            <li className="text-gray-300 text-sm hover:text-white hidden md:block">
-              <Link to={"/"} className="p-1.5 whitespace-nowrap">
+            <li className="hidden text-sm text-gray-300 hover:text-white md:block">
+              <Link to={"/explore/tv"} className="p-1.5 whitespace-nowrap">
                 TV Shows
               </Link>
             </li>
-            <li className="text-gray-300 text-sm hover:text-white hidden md:block">
-              <Link to={"/"} className="p-1.5 pr-0">
+            <li className="hidden text-sm text-gray-300 hover:text-white md:block">
+              <Link to={"/explore/movies"} className="p-1.5 pr-0">
                 Movies
               </Link>
             </li>
@@ -128,14 +128,14 @@ const Header = () => {
             : "-translate-y-20 opacity-0 invisible"
         }`}
       >
-        <ul className="p-4 border-y border-gray-800 bg-dark-color">
-          <li className="text-gray-400 text-sm hover:text-white">
-            <Link to={"/"} className="p-2 block">
+        <ul className="p-4 border-gray-800 border-y bg-dark-color">
+          <li className="text-sm text-gray-400 hover:text-white">
+            <Link to={"/"} className="block p-2">
               Movies
             </Link>
           </li>
-          <li className="text-gray-400 text-sm hover:text-white">
-            <Link to={"/"} className="p-2 block">
+          <li className="text-sm text-gray-400 hover:text-white">
+            <Link to={"/"} className="block p-2">
               TV shows
             </Link>
           </li>

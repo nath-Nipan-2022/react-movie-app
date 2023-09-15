@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useGetConfigurationQuery } from "./store/apis/moviesApi";
 import { setImgUrls } from "./store/slices/moviesSlice";
 import SearchResults from "./pages/SearchResults/SearchResults";
+import Explore from "./pages/Explore/Explore";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ const App = () => {
         {
           path: "search/:query",
           element: <SearchResults />,
+        },
+        {
+          path: "explore/:media_type",
+          element: <Explore />,
         },
       ],
     },
