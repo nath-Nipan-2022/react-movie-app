@@ -8,26 +8,26 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-secondary-color py-12 text-white relative">
-      <div className="flex flex-col items-center contentWrapper">
-        <ul className="list-none flex items-center justify-center gap-5 mb-5 md:mb-10 opacity-80">
-          <li className="transition-all duration-300 cursor-pointer text-sm md:text-base hover:text-primary-color">
-            Terms Of Use
+    <footer className="relative pt-16 pb-12 mt-12 text-white bg-secondary-color">
+      <div className="flex flex-col items-center">
+        <ul className="flex items-center justify-center gap-5 mb-8 text-sm list-none md:mb-10 opacity-80">
+          <li className="transition-all duration-300 cursor-pointer md:text-base hover:text-primary-color">
+            Terms of Use
           </li>
-          <li className="transition-all duration-300 cursor-pointer text-sm md:text-base hover:text-primary-color">
-            Privacy-Policy
+          <li className="transition-all duration-300 cursor-pointer md:text-base hover:text-primary-color">
+            Privacy policy
           </li>
-          <li className="transition-all duration-300 cursor-pointer text-sm md:text-base hover:text-primary-color">
+          <li className="transition-all duration-300 cursor-pointer md:text-base hover:text-primary-color">
             About
           </li>
-          <li className="transition-all duration-300 cursor-pointer text-sm md:text-base hover:text-primary-color">
+          <li className="transition-all duration-300 cursor-pointer md:text-base hover:text-primary-color">
             Blog
           </li>
-          <li className="transition-all duration-300 cursor-pointer text-sm md:text-base hover:text-primary-color">
-            FAQ
+          <li className="transition-all duration-300 cursor-pointer md:text-base hover:text-primary-color">
+            Faq
           </li>
         </ul>
-        <div className="text-center text-sm opacity-50 max-w-lg mb-5 md:mb-10">
+        <div className="max-w-xl px-8 mb-5 text-xs leading-normal text-center opacity-50 md:mb-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -39,7 +39,7 @@ const Footer = () => {
           {ICONS_ARRAY.map((icon) => (
             <span
               key={icon.title}
-              className="w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 hover:shadow-lg hover:bg-primary-color/30"
+              className="flex items-center justify-center w-10 h-10 transition-all duration-300 bg-black rounded-full opacity-50 cursor-pointer hover:opacity-80 hover:bg-primary-color/30"
             >
               <img
                 src={icon.src}
