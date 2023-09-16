@@ -44,7 +44,7 @@ const MovieCard = forwardRef(function MovieCard(
         </div>
         <div>
           <h3>{title || name}</h3>
-          <p>
+          <p className="opacity-90">
             {release_date
               ? release_date?.slice(0, 4)
               : first_air_date?.slice(0, 4)}

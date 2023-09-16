@@ -2,6 +2,7 @@ import { useState } from "react";
 import List from "../../../components/MoviesList";
 import SwitchTabs from "../../../components/SwitchTabs";
 import { useGetMoviesQuery } from "../../../store/apis/moviesApi";
+import { starIcon } from "../../../assets/icons";
 
 const media_types = ["Movies", "TV Shows"];
 
@@ -22,7 +23,16 @@ const TopRated = () => {
   return (
     <section className="relative z-0 pb-12">
       <article className="flex items-center justify-between mb-4">
-        <h2 className="py-2 mb-2 font-medium">Top Rated</h2>
+        <h2 className="py-2 text-lg font-medium">
+          Top Rated{" "}
+          <img
+            src={starIcon}
+            alt="starIcon"
+            width={16}
+            height={16}
+            className="inline pb-1"
+          />
+        </h2>
         <SwitchTabs tabs={media_types} onSwitch={setEndpoint} />
       </article>
       <List data={data} isLoading={isFetching} endpoint={updatedEndpoint} />

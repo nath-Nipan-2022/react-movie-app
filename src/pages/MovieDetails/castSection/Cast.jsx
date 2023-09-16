@@ -14,7 +14,7 @@ const Cast = ({ data }) => {
   return (
     <section className="bg-dark-color">
       <Container className={"p-8 text-gray-200"}>
-        <div className="pt-4 mt-4">Top Cast</div>
+        <div>Top Cast</div>
         <div className="flex gap-4 pb-4 my-4 overflow-y-hidden">
           {data.map((c) => (
             <div key={c.id} className="text-center shrink-0">

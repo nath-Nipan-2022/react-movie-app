@@ -18,7 +18,7 @@ const Similar = () => {
 
   return (
     <section className="relative z-0">
-      <Container className="px-8">
+      <Container className="px-6">
         <article className="flex items-center justify-between mb-4">
           <div>{title || ""}</div>
         </article>

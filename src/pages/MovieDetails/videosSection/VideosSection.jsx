@@ -43,7 +43,7 @@ const VideosSection = ({ videos }) => {
 
   return (
     <section className="bg-dark-color">
-      <Container className={"p-8 pt-0 text-gray-200"}>
+      <Container className={"p-6 pt-0 text-gray-200"}>
         <div>Official Videos</div>
 
         <div className="flex gap-4 pb-4 mt-4 overflow-y-hidden">

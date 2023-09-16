@@ -34,18 +34,18 @@ const HeroSection = () => {
         />
       </figure>
       {/* subtle gradient */}
-      <div className="absolute h-60 w-full bottom-0 -z-10 bg-gradient-to-t from-dark-color to-transparent"></div>
+      <div className="absolute bottom-0 w-full h-60 -z-10 bg-gradient-to-t from-dark-color to-transparent"></div>
 
-      <div className="text-center px-8">
-        <h1 className="text-4xl font-bold w-fit mx-auto mb-4 text-gradient">
+      <div className="px-8 text-center">
+        <h1 className="mx-auto mb-6 text-5xl font-bold lg:text-6xl w-fit text-gradient">
           Welcome.
         </h1>
-        <p className="text-gray-200 mb-8 max-w-sm mx-auto">
+        <p className="max-w-sm mx-auto mb-8 text-gray-200">
           Millions of movies, TV shows and people to discover in one platform.
         </p>
         <form
           onSubmit={handleSubmit}
-          className="max-w-md mx-auto relative rounded-3xl"
+          className="relative max-w-md mx-auto rounded-3xl"
         >
           <img
             src={searchIcon}
@@ -56,7 +56,7 @@ const HeroSection = () => {
           <input
             type="search"
             value={searchQuery}
-            placeholder="Search movies or TV shows..."
+            placeholder="Search movies or TV shows"
             name="movie-search"
             id="movie-search"
             onChange={(e) => setSearchQuery(e.target.value)}

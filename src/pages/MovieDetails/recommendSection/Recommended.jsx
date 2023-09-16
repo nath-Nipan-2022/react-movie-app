@@ -15,7 +15,7 @@ const Recommended = () => {
 
   return (
     <section className="relative pb-12">
-      <Container className="px-8">
+      <Container className="px-6">
         <article className="flex items-center justify-between mb-4">
           <h2 className="py-2 font-medium">Recommended for you</h2>
         </article>
