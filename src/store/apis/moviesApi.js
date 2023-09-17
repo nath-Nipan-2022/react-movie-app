@@ -36,6 +36,17 @@ const moviesApi = createApi({
         return `search/multi?query=${query}&page=${pageNum}`;
       },
     }),
+    getGenres: builder.query({
+      query: (media_type) => `/genre/${media_type}/list`,
+    }),
+    getFilteredData: builder.query({
+      query: ([url, params]) => {
+        return {
+          url,
+          params,
+        };
+      },
+    }),
   }),
 });
 
@@ -45,5 +56,7 @@ export const {
   useGetConfigurationQuery,
   useGetMediaDetailsQuery,
   useGetSearchResultsQuery,
+  useGetGenresQuery,
+  useGetFilteredDataQuery,
 } = moviesApi;
 export { moviesApi };
