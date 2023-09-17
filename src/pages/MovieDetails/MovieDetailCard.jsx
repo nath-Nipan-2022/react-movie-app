@@ -1,19 +1,30 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWatchList } from "../../store/slices/watchListSlice";
+
+import { playIcon, plusIcon, starIcon, check } from "../../assets/icons";
 import placeholder from "../../assets/images/placeholder-image.png";
-import { playIcon, plusIcon, starIcon } from "../../assets/icons";
-import { useSelector } from "react-redux";
-import Image from "../../components/lazyLoadImg/Image";
+
 import Container from "../../components/Container";
 import PopupVideo from "../../components/PopupVideo";
-import { useState } from "react";
+import Image from "../../components/lazyLoadImg/Image";
 
 const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
   const [showVideo, setShowVideo] = useState(false);
   const [videoId, setVideoId] = useState(null);
+  const dispatch = useDispatch();
 
   const { backdrop_path, poster_path } = movie;
 
   const { urls } = useSelector((state) => state.ImagesUrls);
   const imageUrl = urls.images.secure_base_url;
+
+  const watchList = useSelector((state) => state.watchList);
+  let isAdded = watchList.find((item) => item.id === movie.id);
+
+  const addItem = (item) => {
+    dispatch(addToWatchList(item));
+  };
 
   const formateDate = (date) => {
     if (!date) return "N/A";
@@ -107,10 +118,14 @@ const MovieDetailCard = ({ movie, video, crew, className = "" }) => {
               <img src={playIcon} width={20} height={20} alt="play icon" />
               <span>Watch Trailer</span>
             </button>
-            <button className="grid w-8 h-8 plus-btn place-items-center">
+            <button
+              onClick={() => addItem(movie)}
+              className="grid w-8 h-8 plus-btn place-items-center"
+            >
               <img
-                src={plusIcon}
+                src={isAdded ? check : plusIcon}
                 alt="plus icon"
+                title={`${isAdded ? "Added" : "Add"} to watchList`}
                 width={18}
                 height={16}
                 className="h-full"
