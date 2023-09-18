@@ -74,6 +74,11 @@ const Header = () => {
                 Movies
               </Link>
             </li>
+            <li className="hidden text-sm text-gray-300 hover:text-white md:block">
+              <Link to={"/watchlist"} className="p-1.5 whitespace-nowrap">
+                Watchlist
+              </Link>
+            </li>
             <li
               className="group md:hidden"
               onClick={handleMenuClick} // open mobile menu
@@ -106,6 +111,11 @@ const Header = () => {
           <li className="text-sm text-gray-400 hover:text-white">
             <Link to={"/explore/tv"} className="block p-2">
               TV shows
+            </Link>
+          </li>
+          <li className="text-sm text-gray-400 hover:text-white">
+            <Link to={"/watchlist"} className="block p-2">
+              Watchlist
             </Link>
           </li>
         </ul>
