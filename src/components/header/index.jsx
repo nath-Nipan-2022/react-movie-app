@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { useDebounce } from "../../hook/useDebounce";
 import Container from "../Container";
 import SearchBar from "../SearchBar";
 // icons
 import logo from "../../assets/icons/logo.png";
-import searchIcon from "../../assets/icons/search.svg";
 import menu from "../../assets/icons/menu.svg";
 import close from "../../assets/icons/close.svg";
 
 const Header = () => {
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showHeader, setShowHeader] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -22,8 +18,10 @@ const Header = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  const debouncedValue = useDebounce(searchQuery, 500);
-  console.log("debouncedValue: ", debouncedValue, "searchQuery: ", searchQuery);
+  const navigate = useNavigate();
+  const handleSearch = (value) => {
+    navigate(`/search/${value}`);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,14 +40,8 @@ const Header = () => {
     };
   }, [lastScrollY, showMenu]);
 
-  const handleSearchIconClick = () => {
-    setShowSearchBar(true);
-    setShowMenu(false);
-  };
-
   const handleMenuClick = () => {
     setShowMenu((prev) => !prev);
-    setShowSearchBar(false);
   };
 
   return (
@@ -66,33 +58,10 @@ const Header = () => {
 
         <nav>
           <ul className="flex items-center gap-4">
-            <li
-              className={`${
-                showSearchBar
-                  ? "mobile-search-bar-wrapper sm:bg-transparent sm:border-0"
-                  : "opacity-0 sm:opacity-100"
-              }`}
-            >
+            <li>
               <SearchBar
-                onSearch={setSearchQuery}
-                isOpen={showSearchBar}
-                setOpen={setShowSearchBar}
-                autoFocus={showSearchBar}
+                onSearch={(value) => handleSearch(value)}
                 className={"bg-black"}
-              />
-            </li>
-            <li
-              onClick={handleSearchIconClick} // open search bar
-              className={`group sm:pr-1 relative ${
-                showSearchBar ? "hidden" : ""
-              }`}
-            >
-              <img
-                src={searchIcon}
-                alt="search icon"
-                width={15}
-                title="search icon"
-                className="cursor-pointer group-hover:brightness-125"
               />
             </li>
             <li className="hidden text-sm text-gray-300 hover:text-white md:block">
@@ -101,7 +70,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="hidden text-sm text-gray-300 hover:text-white md:block">
-              <Link to={"/explore/movies"} className="p-1.5 pr-0">
+              <Link to={"/explore/movie"} className="p-1.5 pr-0">
                 Movies
               </Link>
             </li>
@@ -130,12 +99,12 @@ const Header = () => {
       >
         <ul className="p-4 border-gray-800 border-y bg-dark-color">
           <li className="text-sm text-gray-400 hover:text-white">
-            <Link to={"/"} className="block p-2">
+            <Link to={"/explore/movie"} className="block p-2">
               Movies
             </Link>
           </li>
           <li className="text-sm text-gray-400 hover:text-white">
-            <Link to={"/"} className="block p-2">
+            <Link to={"/explore/tv"} className="block p-2">
               TV shows
             </Link>
           </li>
