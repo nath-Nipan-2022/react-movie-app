@@ -1,58 +1,63 @@
 import { useEffect, useRef, useState } from "react";
 import searchIcon from "../assets/icons/search.svg";
-import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({ onSearch, isOpen, setOpen, autoFocus, className }) => {
-  const [searchText, setSearchText] = useState("");
-  const inputRef = useRef();
-  const navigate = useNavigate();
-
-  const handleSearchTextChange = (e) => {
-    setSearchText(e.target.value);
-    onSearch(e.target.value);
-  };
+const SearchBar = ({ onSearch, className }) => {
+  const [isOpen, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search/${searchText}`);
+    onSearch(searchQuery);
   };
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (!inputRef.current.contains(e.target)) {
+      if (open && !searchRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
     document.addEventListener("click", handleOutsideClick, true);
 
-    return () => document.removeEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick, true);
+    };
   }, [setOpen]);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={`max-w-md mx-auto relative rounded-3xl ${
-        !isOpen ? "hidden" : ""
-      }`}
+    <div
+      className={` ${
+        isOpen ? "mobile-search-bar-wrapper" : ""
+      } sm:bg-transparent sm:border-0 top-0`}
+      ref={searchRef}
     >
-      <img
-        src={searchIcon}
-        alt="search icon"
-        width={16}
-        className="absolute left-4 top-3"
-      />
-      <input
-        ref={inputRef}
-        value={searchText}
-        onChange={handleSearchTextChange}
-        type="search"
-        autoFocus={autoFocus}
-        placeholder="Search movies..."
-        name="movie-search"
-        id="movie-search"
-        className={`search-input py-[0.525rem] ${className || ""}`}
-      />
-    </form>
+      <form
+        onSubmit={handleSubmit}
+        className={`relative max-w-lg mx-auto rounded-3xl ${
+          isOpen ? "h-auto w-full mr-0" : "h-5 w-5 mr-2"
+        }`}
+      >
+        <img
+          src={searchIcon}
+          alt="search icon"
+          width={16}
+          className="absolute z-10 -translate-y-1/2 cursor-pointer left-4 top-1/2"
+          onClick={() => setOpen((prev) => !prev)}
+        />
+        {isOpen && (
+          <input
+            type="search"
+            value={searchQuery}
+            placeholder="Search movies or TV shows"
+            autoFocus={true}
+            name="movie-or-tv-search"
+            id="movie-or-tv-search"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`search-input py-[0.525rem] ${className || ""}`}
+          />
+        )}
+      </form>
+    </div>
   );
 };
 
