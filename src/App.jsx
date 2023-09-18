@@ -9,6 +9,7 @@ import { useGetConfigurationQuery } from "./store/apis/moviesApi";
 import { setImgUrls } from "./store/slices/moviesSlice";
 import SearchResults from "./pages/SearchResults/SearchResults";
 import Explore from "./pages/Explore/Explore";
+import WatchList from "./pages/WatchList/WatchList";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,10 @@ const App = () => {
         {
           path: "explore/:media_type",
           element: <Explore />,
+        },
+        {
+          path: "/watchlist",
+          element: <WatchList />,
         },
       ],
     },
