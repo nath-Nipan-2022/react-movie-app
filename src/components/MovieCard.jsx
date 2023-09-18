@@ -1,9 +1,11 @@
+import { forwardRef, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
 import placeholder from "../assets/images/placeholder-image.png";
-import { starIcon, plusIcon } from "../assets/icons";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { check, plusIcon, starIcon } from "../assets/icons";
 import Image from "./lazyLoadImg/Image";
-import { forwardRef } from "react";
+import { addToWatchList } from "../store/slices/watchListSlice";
 
 const MovieCard = forwardRef(function MovieCard(
   { movie, endpoint, className, imageClassName },
@@ -18,9 +20,26 @@ const MovieCard = forwardRef(function MovieCard(
     vote_average,
   } = movie;
 
-  const { urls } = useSelector((state) => state.ImagesUrls);
+  const buttonRef = useRef();
+  const dispatch = useDispatch();
 
+  const { urls } = useSelector((state) => state.ImagesUrls);
   const imageUrl = urls?.images?.secure_base_url + "w342" + poster_path;
+
+  const watchList = useSelector((state) => state.watchList);
+  let isAdded = watchList.find((item) => item.id === movie.id);
+
+  const navigate = useNavigate();
+
+  // button interactivity
+  const handleCardClick = (event) => {
+    event.preventDefault();
+    if (buttonRef.current.contains(event.target)) {
+      dispatch(addToWatchList({ ...movie, endpoint }));
+      return;
+    }
+    navigate(`/${movie.media_type || endpoint}/${movie.id}`);
+  };
 
   const cardBody = (
     <>
@@ -52,9 +71,13 @@ const MovieCard = forwardRef(function MovieCard(
 
           <div className="flex items-center justify-between mt-2">
             <button className="primary-btn">Watch Now</button>
-            <button className="grid plus-btn place-items-center">
+            <button
+              ref={buttonRef}
+              className="grid plus-btn place-items-center"
+            >
               <img
-                src={plusIcon}
+                src={isAdded ? check : plusIcon}
+                title={`${isAdded ? "Added" : "Add"} to watchList`}
                 alt="plus icon"
                 width={18}
                 height={16}
@@ -70,7 +93,7 @@ const MovieCard = forwardRef(function MovieCard(
   if (ref) {
     return (
       <Link
-        to={`/${movie.media_type || endpoint}/${movie.id}`}
+        onClick={handleCardClick}
         className={`movie-card group ${className}`}
         ref={ref}
       >
@@ -81,6 +104,7 @@ const MovieCard = forwardRef(function MovieCard(
     return (
       <Link
         to={`/${movie.media_type || endpoint}/${movie.id}`}
+        onClick={handleCardClick}
         className={`movie-card group ${className}`}
       >
         {cardBody}
