@@ -52,8 +52,17 @@ const Header = () => {
     >
       <Container className="relative z-20 flex items-center justify-between py-0 h-14 md:h-16">
         <Link to={"/"} className="flex items-center gap-2 shrink-0">
-          <img src={logo} alt="logo" width={30} height={30} title="logo" />
-          <span className="text-2xl font-bold text-gradient">MovieLand</span>
+          <img
+            src={logo}
+            alt="logo"
+            width={30}
+            height={30}
+            title="logo"
+            className="w-6 sm:w-7"
+          />
+          <span className="hidden text-2xl font-bold text-gradient sm:inline-block">
+            MovieLand
+          </span>
         </Link>
 
         <nav>

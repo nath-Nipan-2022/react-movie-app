@@ -33,15 +33,15 @@ const SearchBar = ({ onSearch, className }) => {
     >
       <form
         onSubmit={handleSubmit}
-        className={`relative max-w-lg mx-auto rounded-3xl ${
-          isOpen ? "h-auto w-full mr-0" : "h-5 w-5 mr-2"
+        className={`group relative max-w-lg mx-auto rounded-3xl ${
+          isOpen ? "h-auto w-full mr-0" : "h-5 w-5 mr-4"
         }`}
       >
         <img
           src={searchIcon}
           alt="search icon"
           width={16}
-          className="absolute z-10 -translate-y-1/2 cursor-pointer left-4 top-1/2"
+          className="absolute z-10 -translate-y-1/2 cursor-pointer left-4 top-1/2 group-hover:brightness-125"
           onClick={() => setOpen((prev) => !prev)}
         />
         {isOpen && (

@@ -22,8 +22,8 @@ const TopRated = () => {
 
   return (
     <section className="relative z-0 pb-12">
-      <article className="flex items-center justify-between mb-4">
-        <h2 className="py-2 text-lg font-medium">
+      <article className="flex items-center justify-between mb-8">
+        <h2 className="py-2 text-xl font-medium">
           Top Rated{" "}
           <img
             src={starIcon}

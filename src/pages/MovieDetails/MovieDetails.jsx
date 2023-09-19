@@ -66,15 +66,22 @@ const SkeletonsForCard = (
     <div className="mt-10 sm:mt-0 sm:w-1/2">
       <Skeletons className="w-48 h-3 mb-2 rounded-lg" />
       <Skeletons className="w-24 h-2 mb-2 rounded-lg" />
-      <Skeletons className="w-20 h-2 mb-2 rounded-lg" />
+      <Skeletons className="w-20 h-2 mb-4 rounded-lg" />
 
       <div className="flex gap-3 mt-4">
         <Skeletons className="w-20 rounded-xl h-7" />
         <Skeletons className="rounded-full h-7 w-7" />
       </div>
 
-      <Skeletons className="w-16 h-2 mt-6 mb-3 rounded-lg" />
+      <Skeletons className="w-16 h-2 mt-8 mb-4 rounded-lg" />
       <Skeletons className="h-2 mb-2 rounded-lg" />
+      <div className="grid grid-cols-3 space-x-4">
+        <Skeletons className="h-2 col-span-2 rounded-lg" />
+        <Skeletons className="h-2 col-span-1 rounded-lg" />
+      </div>
+      <Skeletons className="h-2 mt-2 rounded-lg" />
+
+      <Skeletons className="h-2 mt-8 mb-2 rounded-lg" />
       <div className="grid grid-cols-3 space-x-4">
         <Skeletons className="h-2 col-span-2 rounded-lg" />
         <Skeletons className="h-2 col-span-1 rounded-lg" />
@@ -87,7 +94,7 @@ const SkeletonsForCard = (
 const SkeletonsForCast = (
   <Container className={"px-8"}>
     <div className="flex flex-wrap gap-4 my-4">
-      <Skeletons times={5} className="w-16 h-16 rounded-full" />
+      <Skeletons times={10} className="w-16 h-16 rounded-full" />
     </div>
   </Container>
 );

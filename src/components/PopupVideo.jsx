@@ -17,7 +17,7 @@ const PopupVideo = ({ videoId, open, onClose }) => {
         className={`absolute w-80 sm:w-[420px] aspect-video left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2`}
       >
         <div
-          className={`relative w-80 sm:w-[420px] aspect-video bg-gray-600 popup-video`}
+          className={`relative w-80 sm:w-[440px] rounded-xl overflow-hidden aspect-video bg-gray-600 popup-video`}
         >
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${videoId}`}
