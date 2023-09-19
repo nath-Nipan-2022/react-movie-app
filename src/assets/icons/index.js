@@ -1,3 +1,4 @@
+import check from "./check.svg";
 import playIcon from "./play-fill-white.svg";
 import chevron from "./chevron.svg";
 import plusIcon from "./plus.svg";
@@ -17,4 +18,5 @@ export {
   linkedin,
   twitter,
   chevron,
+  check,
 };
