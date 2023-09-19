@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import Container from "../../components/Container";
 import MovieCard from "../../components/MovieCard";
 import Skeletons from "../../components/Skeletons";
+import { EmptyState } from "../../components/EmptyStates";
+
 import { useGetSearchResultsQuery } from "../../store/apis/moviesApi";
 import { useInfiniteScroll } from "../../hook/useInfiniteScroll";
 
@@ -65,7 +68,7 @@ const SearchResults = () => {
         key={r.id}
         movie={r}
         endpoint={r.endpoint}
-        className="shrink-0 bg-skeleton aspect-[1/1.45]"
+        className="shrink-0 bg-skeleton aspect-[1/1.35]"
       />
     );
   });
@@ -74,14 +77,18 @@ const SearchResults = () => {
     <main>
       <section className="pb-12">
         <Container>
-          <div className="py-2 mb-2 font-medium">
-            Search results for {`'${query}'`}
-          </div>
+          <h2 className="pb-2 mb-6 text-lg font-medium border-b border-gray-700">
+            Search results for{" "}
+            <span className="font-bold text-orange-400">{query}</span>
+          </h2>
+
           <div className="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 md:grid-cols-4 sm:gap-6 lg:gap-4 lg:grid-cols-5">
-            {renderResults}
+            {isFetching && pageNum === 1 ? renderSkeletons : renderResults}
             {isFetching && renderSkeletons}
           </div>
-          {!isFetching && results?.length <= 0 && <div>No results found</div>}
+          {!isFetching && results?.length <= 0 && (
+            <EmptyState title={"No results found!"} />
+          )}
           {error && (
             <div className="font-bold text-center text-red-500">{error}</div>
           )}

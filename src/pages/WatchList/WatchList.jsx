@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Container from "../../components/Container";
 import MovieCard from "../../components/MovieCard";
+import { EmptyState } from "../../components/EmptyStates";
 
 const WatchList = () => {
   const watchList = useSelector((state) => state.watchList);
@@ -27,13 +28,12 @@ const WatchList = () => {
             {renderCards}
           </div>
           {watchList?.length <= 0 && (
-            <div className="w-48 p-4 mx-auto leading-normal text-gray-200 rounded-md bg-skeleton">
-              You have no movies or tv shows in your watchlist
-            </div>
+            <EmptyState title={"No movies or tv shows in your watchlist"} />
           )}
         </Container>
       </section>
     </main>
   );
 };
+
 export default WatchList;
