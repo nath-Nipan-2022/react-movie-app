@@ -56,6 +56,7 @@ const List = ({ data: movies, isLoading, endpoint }) => {
     ));
 
   const canScrollMore =
+    !scrollAmount ||
     scrollAmount + (carousel?.offsetWidth + 16) < carousel?.scrollWidth;
 
   return (
