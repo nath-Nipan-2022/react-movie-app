@@ -1,15 +1,15 @@
 import MovieCard from "./MovieCard";
 import Skeletons from "./Skeletons";
-import { useRef } from "react";
-import rightArrow from "../assets/icons/right-arrow.svg";
-import leftArrow from "../assets/icons/left-arrow.svg";
+import { useState, useRef } from "react";
+import chevron from "../assets/icons/chevron.svg";
 
 const List = ({ data: movies, isLoading, endpoint }) => {
   const carouselRef = useRef();
+  const carousel = carouselRef.current;
+
+  const [scrollAmount, setScrollAmount] = useState(0);
 
   const navigation = (direction) => {
-    const carousel = carouselRef.current;
-
     const scrollAmount =
       direction === "left"
         ? carousel.scrollLeft - (carousel.offsetWidth + 16)
@@ -19,6 +19,8 @@ const List = ({ data: movies, isLoading, endpoint }) => {
       left: scrollAmount,
       behavior: "smooth",
     });
+
+    setScrollAmount(scrollAmount);
   };
 
   const renderMovies = movies?.results.map((movie) => {
@@ -53,40 +55,41 @@ const List = ({ data: movies, isLoading, endpoint }) => {
       </div>
     ));
 
-  if (movies?.results?.length <= 0) {
-    return "";
-  }
+  const canScrollMore =
+    scrollAmount + (carousel?.offsetWidth + 16) < carousel?.scrollWidth;
 
   return (
-    <div className="relative overflow-hidden">
-      {isLoading ? (
-        <div className="flex gap-2.5 overflow-y-hidden sm:overflow-hidden min-h-[260px]">
-          {renderSkeletons}
-        </div>
-      ) : (
-        // Carousel
-        <div
-          ref={carouselRef}
-          className="flex gap-2.5 overflow-y-hidden sm:overflow-hidden min-h-[260px]"
-        >
-          {renderMovies}
-        </div>
-      )}
+    <div className="relative">
+      <div className="overflow-hidden">
+        {isLoading ? (
+          <div className="flex gap-2.5 overflow-y-hidden sm:overflow-hidden min-h-[260px]">
+            {renderSkeletons}
+          </div>
+        ) : (
+          // Carousel
+          <div
+            ref={carouselRef}
+            className="flex gap-2.5 overflow-y-hidden sm:overflow-hidden min-h-[260px]"
+          >
+            {renderMovies}
+          </div>
+        )}
+      </div>
       {/* arrows */}
-      {movies?.results?.length >= 5 && (
+      {scrollAmount > 0 && (
         <div
           onClick={() => navigation("left")}
-          className="carousel-arrow invert left-4"
+          className="rotate-90 carousel-arrow -left-4"
         >
-          <img src={leftArrow} width={20} height={20} alt="left arrow" />
+          <img src={chevron} width={10} height={10} alt="left arrow" />
         </div>
       )}
-      {movies?.results?.length >= 5 && (
+      {canScrollMore && (
         <div
           onClick={() => navigation("right")}
-          className="carousel-arrow invert right-4"
+          className="-rotate-90 carousel-arrow -right-4"
         >
-          <img src={rightArrow} width={20} height={20} alt="right arrow" />
+          <img src={chevron} width={10} height={10} alt="right arrow" />
         </div>
       )}
     </div>

@@ -79,6 +79,6 @@ body {
     @apply fixed left-0 w-full px-8 py-4 transition-opacity border-b border-gray-900 opacity-100 bg-gray-950 sm:static sm:p-0;
   }
   .carousel-arrow {
-    @apply absolute hidden w-8 h-8 transition -translate-y-1/2 rounded-full cursor-pointer sm:grid place-items-center bg-skeleton hover:bg-slate-600 top-1/2;
+    @apply absolute hidden w-8 h-8 transition -translate-y-1/2 rounded-full shadow-lg cursor-pointer sm:grid place-items-center bg-skeleton hover:bg-slate-700 top-1/2 hover:border border-slate-600;
   }
 }

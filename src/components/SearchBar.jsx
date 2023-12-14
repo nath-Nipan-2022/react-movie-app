@@ -48,7 +48,7 @@ const SearchBar = ({ onSearch, className }) => {
           <input
             type="search"
             value={searchQuery}
-            placeholder="Search movies or TV shows"
+            placeholder="Search Movies or TV shows..."
             autoFocus={true}
             name="movie-or-tv-search"
             id="movie-or-tv-search"

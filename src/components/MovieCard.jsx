@@ -90,27 +90,16 @@ const MovieCard = forwardRef(function MovieCard(
     </>
   );
 
-  if (ref) {
-    return (
-      <Link
-        onClick={handleCardClick}
-        className={`movie-card group ${className}`}
-        ref={ref}
-      >
-        {cardBody}
-      </Link>
-    );
-  } else {
-    return (
-      <Link
-        to={`/${movie.media_type || endpoint}/${movie.id}`}
-        onClick={handleCardClick}
-        className={`movie-card group ${className}`}
-      >
-        {cardBody}
-      </Link>
-    );
-  }
+  return (
+    <Link
+      to={`/${movie.media_type || endpoint}/${movie.id}`}
+      onClick={handleCardClick}
+      className={`movie-card group ${className}`}
+      ref={ref}
+    >
+      {cardBody}
+    </Link>
+  );
 });
 
 export default MovieCard;

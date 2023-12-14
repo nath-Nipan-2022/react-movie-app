@@ -56,7 +56,7 @@ const HeroSection = () => {
           <input
             type="search"
             value={searchQuery}
-            placeholder="Search movies or TV shows"
+            placeholder="Search Movies or TV shows..."
             name="movie-search"
             id="movie-search"
             onChange={(e) => setSearchQuery(e.target.value)}

@@ -116,7 +116,7 @@ const Select = ({
               <div
                 key={renderValue(item)}
                 onClick={() => selectItem(item)}
-                className="p-[5px] px-3 border-b border-[#f1e7e7] last:border-0 hover:bg-black/10 flex gap-4 justify-between items-center"
+                className="p-[5px] px-3 border-b border-[#f1e7e7] last:border-0 hover:bg-black/10 flex gap-4 justify-between items-center cursor-pointer"
               >
                 {renderOption(item)}
               </div>
@@ -124,7 +124,7 @@ const Select = ({
           }
           return (
             <label
-              className="p-[5px] px-3 border-b border-[#f1e7e7] last:border-0 hover:bg-black/10 flex gap-4 justify-between items-center"
+              className="p-[5px] px-3 border-b border-[#f1e7e7] last:border-0 hover:bg-black/10 flex gap-4 justify-between items-center cursor-pointer"
               key={renderValue(item)}
               htmlFor={renderValue(item)}
             >
