@@ -5,11 +5,11 @@ import chevron from "../assets/icons/chevron.svg";
 
 const List = ({ data: movies, isLoading, endpoint }) => {
   const carouselRef = useRef();
-  const carousel = carouselRef.current;
 
   const [scrollAmount, setScrollAmount] = useState(0);
 
   const navigation = (direction) => {
+    const carousel = carouselRef.current;
     const scrollAmount =
       direction === "left"
         ? carousel.scrollLeft - (carousel.offsetWidth + 16)
@@ -57,7 +57,8 @@ const List = ({ data: movies, isLoading, endpoint }) => {
 
   const canScrollMore =
     !scrollAmount ||
-    scrollAmount + (carousel?.offsetWidth + 16) < carousel?.scrollWidth;
+    scrollAmount + carouselRef.current?.offsetWidth + 16 <
+      carouselRef.current?.scrollWidth;
 
   return (
     <div className="relative">
